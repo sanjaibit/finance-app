@@ -1,84 +1,64 @@
-<!-- expense-dashboard.component.html -->
-<div class="dashboard-container">
-  <!-- Header -->
-  <div class="dashboard-header">
-    <h1>Expense Dashboard</h1>
-    <div class="date-filter">
-      <span>February 2025</span>
+<div class="dashboard">
+  <!-- Cards Section -->
+  <div class="cards">
+    <div class="card" *ngFor="let expense of categoryExpenses">
+      <h5>{{ expense.category }}</h5>
+      <h3>${{ expense.amount }}</h3>
     </div>
   </div>
-  
-  <!-- Category Card -->
-  <div class="dashboard-card">
-    <div class="card-header">
-      <h2>Expenses by Category</h2>
-    </div>
-    <div class="card-content">
-      <div class="category-chart">
-        <canvas id="categoryChart"></canvas>
-      </div>
-      <div class="category-list">
-        <div *ngFor="let category of categoryTotals" class="category-item">
-          <div class="category-color" [style.background-color]="category.color"></div>
-          <div class="category-name">{{ category.category }}</div>
-          <div class="category-amount">${{ category.amount.toFixed(2) }}</div>
-        </div>
+
+  <!-- Custom Bar Chart -->
+  <div class="chart-container">
+    <h5>Category Wise Expenses</h5>
+    <div class="bar-chart">
+      <div class="bar" *ngFor="let expense of categoryExpenses"
+           [style.height]="expense.amount + 'px'"
+           [attr.data-label]="expense.category">
       </div>
     </div>
   </div>
-  
-  <!-- Monthly Comparison Card -->
-  <div class="dashboard-card">
-    <div class="card-header">
-      <h2>Monthly Comparison</h2>
-    </div>
-    <div class="card-content">
-      <div class="comparison-stats">
-        <div class="stat-item">
-          <div class="stat-label">Previous Month</div>
-          <div class="stat-value">${{ previousMonthTotal.toFixed(2) }}</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Current Month</div>
-          <div class="stat-value">${{ currentMonthTotal.toFixed(2) }}</div>
-        </div>
-        <div class="stat-item" [ngClass]="{'increase': monthlyComparison > 0, 'decrease': monthlyComparison < 0}">
-          <div class="stat-label">Change</div>
-          <div class="stat-value">
-            {{ monthlyComparison > 0 ? '+' : '' }}{{ monthlyComparison.toFixed(1) }}%
-          </div>
-        </div>
-      </div>
-      <div class="comparison-chart">
-        <canvas id="comparisonChart"></canvas>
-      </div>
-    </div>
+
+  <!-- Transactions Table -->
+  <div class="transactions">
+    <h5>Transactions</h5>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.date }}</td>
+          <td>{{ transaction.description }}</td>
+          <td>${{ transaction.amount }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
-  <!-- Transactions Table Card -->
-  <div class="dashboard-card">
-    <div class="card-header">
-      <h2>Recent Transactions</h2>
+
+  <section class="savings-goal">
+    <h2>Savings Goal</h2>
+    <form (submit)="setSavingsGoal(goalInput.value, currentInput.value); $event.preventDefault()">
+      <input type="number" #goalInput placeholder="Set Goal ($)" required>
+      <input type="number" #currentInput placeholder="Current Savings ($)" required>
+      <button type="submit">Set Goal</button>
+    </form>
+    <p *ngIf="savingsGoal">Goal: ${{ savingsGoal }} | Current: ${{ currentSavings }}</p>
+    <div class="progress-bar">
+      <div class="progress" [style.width]="(currentSavings / savingsGoal) * 100 + '%'"></div>
     </div>
-    <div class="card-content">
-      <table class="transactions-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let transaction of transactions">
-            <td>{{ transaction.date | date:'mediumDate' }}</td>
-            <td>{{ transaction.category }}</td>
-            <td>{{ transaction.description }}</td>
-            <td class="amount">${{ transaction.amount.toFixed(2) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  </section>
+
+  <!-- Bill Reminder Section -->
+  <section class="bill-reminders">
+    <h2>Upcoming Bills</h2>
+    <ul>
+      <li *ngFor="let bill of billReminders">
+        <strong>{{ bill.name }}</strong> - Due: {{ bill.dueDate }} - Amount: ${{ bill.amount }}
+      </li>
+    </ul>
+  </section>
 </div>

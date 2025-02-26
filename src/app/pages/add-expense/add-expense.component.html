@@ -1,0 +1,32 @@
+<section id="expenses">
+    <h1>Expense Categorization</h1>
+  
+    <!-- Manual Expense Entry -->
+    <h2>Manually Add an Expense</h2>
+    <form (submit)="addExpense(expenseName.value, expenseAmount.value, expenseCategory.value); $event.preventDefault()">
+      <input type="text" #expenseName placeholder="Expense Name" required>
+      <input type="number" #expenseAmount placeholder="Amount ($)" required>
+      <select #expenseCategory>
+        <option value="food">Food</option>
+        <option value="transport">Transport</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="bills">Bills</option>
+        <option value="other">Other</option>
+      </select>
+      <button type="submit">Add Expense</button>
+    </form>
+  
+    <!-- Bank Statement Upload -->
+    <h2>Upload Bank Statement</h2>
+    <input type="file" id="bank-statement" accept=".csv, .pdf">
+    <button (click)="processBankStatement()">Upload & Process</button>
+  
+    <!-- Expense List -->
+    <h2>Expense List</h2>
+    <ul id="expense-list">
+      <li *ngFor="let expense of expenses">
+        {{ expense.name }} - ${{ expense.amount }} ({{ expense.category }})
+      </li>
+    </ul>
+  </section>
+  

@@ -1,170 +1,156 @@
-/* expense-dashboard.component.scss */
-.dashboard-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .dashboard-header {
-    grid-column: 1 / -1;
+/* Dashboard Layout */
+.dashboard {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    
-    h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #333;
-    }
-    
-    .date-filter {
-      font-size: 16px;
-      color: #666;
-      padding: 5px 10px;
-      border-radius: 4px;
-      background-color: #f5f5f5;
-    }
-  }
-  
-  .dashboard-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    
-    &:nth-child(2), &:nth-child(3) {
-      height: 350px;
-    }
-    
-    &:nth-child(4) {
-      grid-column: 1 / -1;
-    }
-  }
-  
-  .card-header {
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    
-    h2 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 500;
-      color: #333;
-    }
-  }
-  
-  .card-content {
+    flex-direction: column;
+    gap: 20px;
     padding: 20px;
   }
   
-  // Category card
-  .category-chart {
-    height: 180px;
-    margin-bottom: 15px;
-  }
-  
-  .category-list {
-    max-height: 150px;
-    overflow-y: auto;
-  }
-  
-  .category-item {
+  /* Cards Section */
+  .cards {
     display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    padding: 5px 0;
+    gap: 15px;
   }
   
-  .category-color {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .category-name {
-    flex: 1;
-  }
-  
-  .category-amount {
-    font-weight: 500;
-  }
-  
-  // Monthly comparison card
-  .comparison-stats {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-  }
-  
-  .stat-item {
+  .card {
+    background: #4CAF50;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
     text-align: center;
-    padding: 0 10px;
-    
-    &.increase {
-      color: #d9534f;
-    }
-    
-    &.decrease {
-      color: #5cb85c;
-    }
+    flex: 1;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   }
   
-  .stat-label {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
+  h5 {
+    margin: 0;
   }
   
-  .stat-value {
-    font-size: 20px;
-    font-weight: 500;
+  /* Chart Section */
+  .chart-container {
+    text-align: center;
   }
   
-  .comparison-chart {
-    height: 180px;
+  .bar-chart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 200px;
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+    position: relative;
   }
   
-  // Transactions table
-  .transactions-table {
+  .bar {
+    width: 40px;
+    background: #36A2EB;
+    transition: 0.3s;
+    position: relative;
+  }
+  
+  .bar:hover {
+    background: #FF6384;
+    cursor: pointer;
+  }
+  
+  .bar::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #333;
+  }
+  
+  /* Transactions Table */
+  .transactions {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  table {
     width: 100%;
     border-collapse: collapse;
-    
-    th, td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-    
-    th {
-      font-weight: 500;
-      color: #666;
-      background-color: #f9f9f9;
-    }
-    
-    tr:last-child td {
-      border-bottom: none;
-    }
-    
-    .amount {
-      font-weight: 500;
-      text-align: right;
-    }
   }
   
-  // Responsive adjustments
-  @media (max-width: 768px) {
-    .dashboard-container {
-      grid-template-columns: 1fr;
-    }
-    
-    .dashboard-card:nth-child(2), 
-    .dashboard-card:nth-child(3),
-    .dashboard-card:nth-child(4) {
-      grid-column: 1;
-    }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background: #f8f8f8;
+  }
+  
+
+  /* Savings Goal Section */
+.savings-goal {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  input, button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #45a049;
+  }
+  
+  /* Progress Bar */
+  .progress-bar {
+    width: 100%;
+    background: #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+    height: 15px;
+    position: relative;
+  }
+  
+  .progress {
+    height: 100%;
+    background: #36A2EB;
+    border-radius: 5px;
+  }
+  
+  /* Bill Reminder Section */
+  .bill-reminders {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bill-reminders ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .bill-reminders li {
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   }
