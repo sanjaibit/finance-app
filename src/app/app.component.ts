@@ -6,7 +6,7 @@ import { BillRemainderComponent } from './pages/bill-remainder/bill-remainder.co
 
 @Component({
   selector: 'app-root',
-  imports: [BillRemainderComponent],
+  imports: [DashboardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

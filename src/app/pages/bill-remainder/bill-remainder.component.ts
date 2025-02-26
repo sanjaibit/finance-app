@@ -14,7 +14,8 @@ export class BillRemainderComponent implements OnInit {
 
   billTitle: string = '';
   billDate: string = '';
-  billReminders: { title: string; date: string }[] = [];
+  billAmount : number = 0;
+  billReminders: { title: string; date: string; amount :number}[] = [];
 
   ngOnInit() {
     this.loadReminders();
@@ -29,11 +30,12 @@ export class BillRemainderComponent implements OnInit {
   addReminder() {
     if (!this.billTitle || !this.billDate) return;
 
-    const newBill = { title: this.billTitle, date: this.billDate };
+    const newBill = { title: this.billTitle, date: this.billDate, amount:this.billAmount };
     this.billService.addBillReminder(newBill).subscribe(() => {
       this.billReminders.push(newBill);
       this.billTitle = '';
       this.billDate = '';
+      this.billAmount = 0;
     });
   }
 }

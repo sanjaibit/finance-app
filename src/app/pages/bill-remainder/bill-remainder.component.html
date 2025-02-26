@@ -8,12 +8,15 @@
       <label for="date">Due Date:</label>
       <input id="date" type="date" [(ngModel)]="billDate" name="billDate" required />
 
+      <label for="amount">Due Date:</label>
+      <input id="amount" [(ngModel)]="billAmount" name="billAmount" required />
+
       <button type="submit">Add Reminder</button>
     </form>
 
     <ul>
       <li *ngFor="let bill of billReminders">
-        {{ bill.title }} - {{ bill.date | date:'longDate' }}
+        {{ bill.title }} - {{ bill.date | date:'longDate' }} - {{bill.amount}}
       </li>
     </ul>
   </div>
