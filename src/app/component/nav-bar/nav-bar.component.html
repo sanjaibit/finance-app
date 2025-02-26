@@ -1,0 +1,59 @@
+<!-- dashboard.component.html -->
+<div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="feather icon-layers"></i>
+            <h2>Mantis</h2>
+        </div>
+
+        <div class="menu-heading">Main</div>
+        <ul>
+            <li>
+                <a href="/dashboard" routerLinkActive="active">
+                    <i class="feather icon-grid"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="/transactions">
+                    <i class="feather icon-package"></i>
+                    Transactions
+                </a>
+            </li>
+            <li>
+                <a routerLink="/savings">
+                    <i class="feather icon-dollar-sign"></i>
+                    Savings
+                </a>
+            </li>
+            <li>
+                <a href="/bill">
+                    <i class="feather icon-calendar"></i>
+                    Bills
+                </a>
+            </li>
+        </ul>
+
+        <div class="menu-heading">Reports</div>
+        <ul>
+            <li>
+                <a routerLink="/analytics">
+                    <i class="feather icon-activity"></i>
+                    Analytics
+                </a>
+            </li>
+            <li>
+                <a routerLink="/history">
+                    <i class="feather icon-clock"></i>
+                    History
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+
+    <main class="content">
+        <router-outlet></router-outlet>
+    </main>
+</div>

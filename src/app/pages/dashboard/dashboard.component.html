@@ -1,178 +1,116 @@
-<!-- dashboard.component.html -->
-<div class="dashboard">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">
-      <i class="feather icon-layers"></i>
-      <h2>Mantis</h2>
+<!-- Header -->
+<div class="header">
+  <div class="page-title">
+    <h1>Dashboard</h1>
+    <div class="breadcrumb">
+      <a routerLink="/">Home</a>
+      <span>/</span>
+      <a routerLink="/dashboard">Dashboard</a>
     </div>
-    
-    <div class="menu-heading">Main</div>
-    <ul>
-      <li>
-        <a routerLink="/dashboard" routerLinkActive="active">
-          <i class="feather icon-grid"></i>
-          Dashboard
-        </a>
-      </li>
-      <li>
-        <a routerLink="/transactions">
-          <i class="feather icon-package"></i>
-          Transactions
-        </a>
-      </li>
-      <li>
-        <a routerLink="/savings">
-          <i class="feather icon-dollar-sign"></i>
-          Savings
-        </a>
-      </li>
-      <li>
-        <a routerLink="/bills">
-          <i class="feather icon-calendar"></i>
-          Bills
-        </a>
-      </li>
-    </ul>
-    
-    <div class="menu-heading">Reports</div>
-    <ul>
-      <li>
-        <a routerLink="/analytics">
-          <i class="feather icon-activity"></i>
-          Analytics
-        </a>
-      </li>
-      <li>
-        <a routerLink="/history">
-          <i class="feather icon-clock"></i>
-          History
-        </a>
-      </li>
-    </ul>
-  </aside>
-
-  <main class="content">
-    <!-- Header -->
-    <div class="header">
-      <div class="page-title">
-        <h1>Dashboard</h1>
-        <div class="breadcrumb">
-          <a routerLink="/">Home</a>
-          <span>/</span>
-          <a routerLink="/dashboard">Dashboard</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Top Cards -->
-    <div class="top-cards">
-      <div class="card" *ngFor="let card of categoryExpenses">
-        <h5>{{ card.category }}</h5>
-        <h3>{{ card.amount | number:'1.2-2' }}</h3>
-        <p>
-          <span class="stat-change {{ card.color }}">
-            {{ card.color === 'up' ? '+12.5%' : card.color === 'down' ? '-3.2%' : '+0%' }}
-          </span> 
-          vs previous month
-        </p>
-      </div>
-    </div>
-
-    <!-- Charts Section -->
-    <div class="charts">
-      <div class="chart-container">
-        <div class="chart-header">
-          <h5>Expense Overview</h5>
-          <div class="chart-tabs">
-            <button class="chart-tab" 
-                    [class.active]="activeExpensePeriod === 'week'"
-                    (click)="setExpensePeriod('week')">Week</button>
-            <button class="chart-tab" 
-                    [class.active]="activeExpensePeriod === 'month'"
-                    (click)="setExpensePeriod('month')">Month</button>
-            <button class="chart-tab" 
-                    [class.active]="activeExpensePeriod === 'year'"
-                    (click)="setExpensePeriod('year')">Year</button>
-          </div>
-        </div>
-        <div class="canvas-container">
-          <canvas id="expenseOverview"></canvas>
-        </div>
-      </div>
-      <div class="chart-container">
-        <div class="chart-header">
-          <h5>Category Wise Expenses</h5>
-          <div class="chart-tabs">
-            <button class="chart-tab"
-                    [class.active]="activeCategoryPeriod === 'week'"
-                    (click)="setCategoryPeriod('week')">Week</button>
-            <button class="chart-tab"
-                    [class.active]="activeCategoryPeriod === 'month'"
-                    (click)="setCategoryPeriod('month')">Month</button>
-            <button class="chart-tab"
-                    [class.active]="activeCategoryPeriod === 'year'"
-                    (click)="setCategoryPeriod('year')">Year</button>
-          </div>
-        </div>
-        <div class="canvas-container">
-          <canvas id="categoryExpenses"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- Transactions Table -->
-    <div class="transactions">
-      <h5>Recent Transactions</h5>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let transaction of transactions">
-            <td>{{ transaction.Date }}</td>
-            <td>{{ transaction.Description }}</td>
-            <td>{{ transaction.Category }}</td>
-            <td>{{ transaction.Amount | number:'1.2-2' }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Bottom Sections -->
-    <div class="bottom-sections">
-      <!-- Savings Goal Section -->
-      <section class="savings-goal">
-        <h2>Savings Goal</h2>
-        <p>Goal: ${{ savingsGoal | number:'1.2-2' }} | Current: ${{ currentSavings | number:'1.2-2' }}</p>
-        <div class="progress-bar">
-          <div class="progress" [style.width.%]="savingsPercentage"></div>
-        </div>
-      </section>
-
-      <!-- Bill Reminders -->
-      <section class="bill-reminders">
-        <h2>Upcoming Bills</h2>
-        <ul>
-          <li *ngFor="let bill of billReminders">
-            <div class="bill-info">
-              <div class="bill-icon">
-                <i class="feather icon"></i>
-              </div>
-              <div class="bill-details">
-                <h4>{{ bill.title }}</h4>
-                <p>Due: {{ bill.date }}</p>
-              </div>
-            </div>
-            <div class="bill-amount">${{ bill.amount | number:'1.2-2' }}</div>
-          </li>
-        </ul>
-      </section>
-    </div>
-  </main>
+  </div>
 </div>
+
+<!-- Top Cards -->
+<div class="top-cards">
+  <div class="card" *ngFor="let card of categoryExpenses">
+    <h5>{{ card.category }}</h5>
+    <h3>{{ card.amount | number:'1.2-2' }}</h3>
+    <p>
+      <span class="stat-change {{ card.color }}">
+        {{ card.color === 'up' ? '+12.5%' : card.color === 'down' ? '-3.2%' : '+0%' }}
+      </span>
+      vs previous month
+    </p>
+  </div>
+</div>
+
+<!-- Charts Section -->
+<div class="charts">
+  <div class="chart-container">
+    <div class="chart-header">
+      <h5>Expense Overview</h5>
+      <div class="chart-tabs">
+        <button class="chart-tab" [class.active]="activeExpensePeriod === 'week'"
+          (click)="setExpensePeriod('week')">Week</button>
+        <button class="chart-tab" [class.active]="activeExpensePeriod === 'month'"
+          (click)="setExpensePeriod('month')">Month</button>
+        <button class="chart-tab" [class.active]="activeExpensePeriod === 'year'"
+          (click)="setExpensePeriod('year')">Year</button>
+      </div>
+    </div>
+    <div class="canvas-container">
+      <canvas id="expenseOverview"></canvas>
+    </div>
+  </div>
+  <div class="chart-container">
+    <div class="chart-header">
+      <h5>Category Wise Expenses</h5>
+      <div class="chart-tabs">
+        <button class="chart-tab" [class.active]="activeCategoryPeriod === 'week'"
+          (click)="setCategoryPeriod('week')">Week</button>
+        <button class="chart-tab" [class.active]="activeCategoryPeriod === 'month'"
+          (click)="setCategoryPeriod('month')">Month</button>
+        <button class="chart-tab" [class.active]="activeCategoryPeriod === 'year'"
+          (click)="setCategoryPeriod('year')">Year</button>
+      </div>
+    </div>
+    <div class="canvas-container">
+      <canvas id="categoryExpenses"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Sections -->
+<div class="bottom-sections">
+  <!-- Savings Goal Section -->
+  <section class="savings-goal">
+    <h2>Savings Goal</h2>
+    <p>Goal: ${{ savingsGoal | number:'1.2-2' }} | Current: ${{ currentSavings | number:'1.2-2' }}</p>
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="savingsPercentage"></div>
+    </div>
+  </section>
+
+  <!-- Bill Reminders -->
+  <section class="bill-reminders">
+    <h2>Upcoming Bills</h2>
+    <ul>
+      <li *ngFor="let bill of billReminders">
+        <div class="bill-info">
+          <div class="bill-icon">
+            <i class="feather icon"></i>
+          </div>
+          <div class="bill-details">
+            <h4>{{ bill.title }}</h4>
+            <p>Due: {{ bill.date }}</p>
+          </div>
+        </div>
+        <div class="bill-amount">${{ bill.amount | number:'1.2-2' }}</div>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<!-- Transactions Table -->
+<div class="transactions">
+  <h5>Recent Transactions</h5>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of transactions">
+        <td>{{ transaction.Date }}</td>
+        <td>{{ transaction.Description }}</td>
+        <td>{{ transaction.Category }}</td>
+        <td>{{ transaction.Amount | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

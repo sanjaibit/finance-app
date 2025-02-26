@@ -31,33 +31,8 @@ export class DashboardComponent implements OnInit{
   transactions: Transaction[] = [];
 
 
-  categoryExpenses: CategoryExpense[] = [
-    { 
-      category: 'Total Income', 
-      amount: 9560, 
-      color: 'up',
-      icon: 'trending-up'
-    },
-    { 
-      category: 'Total Expenses', 
-      amount: 5230, 
-      color: 'down',
-      icon: 'trending-down'
-    },
-    { 
-      category: 'Total Savings', 
-      amount: 4330, 
-      color: 'up',
-      icon: 'dollar-sign'
-    },
-    { 
-      category: 'Upcoming Bills', 
-      amount: 1350, 
-      color: 'neutral',
-      icon: 'calendar'
-    }
-  ];
-  
+  categoryExpenses: CategoryExpense[] =[];
+
   loadReminders() {
     this.billService.getBillReminders().subscribe((data) => {
       this.billReminders = data;
@@ -151,14 +126,6 @@ export class DashboardComponent implements OnInit{
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [
-          {
-            label: 'Income',
-            data: incomeData,
-            borderColor: '#1e88e5',
-            backgroundColor: 'rgba(30, 136, 229, 0.1)',
-            tension: 0.4,
-            fill: true
-          },
           {
             label: 'Expenses',
             data: expenseData,
