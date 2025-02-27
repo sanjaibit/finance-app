@@ -1,32 +1,57 @@
-<section id="expenses">
-    <h1>Expense Categorization</h1>
+<div class="container">
   
-    <!-- Manual Expense Entry -->
-    <h2>Manually Add an Expense</h2>
-    <form (submit)="addExpense(expenseName.value, expenseAmount.value, expenseCategory.value); $event.preventDefault()">
-      <input type="text" #expenseName placeholder="Expense Name" required>
-      <input type="number" #expenseAmount placeholder="Amount ($)" required>
-      <select #expenseCategory>
-        <option value="food">Food</option>
-        <option value="transport">Transport</option>
-        <option value="entertainment">Entertainment</option>
-        <option value="bills">Bills</option>
-        <option value="other">Other</option>
-      </select>
-      <button type="submit">Add Expense</button>
-    </form>
-  
-    <!-- Bank Statement Upload -->
-    <h2>Upload Bank Statement</h2>
-    <input type="file" id="bank-statement" accept=".csv, .pdf">
-    <button (click)="processBankStatement()">Upload & Process</button>
-  
-    <!-- Expense List -->
-    <h2>Expense List</h2>
-    <ul id="expense-list">
-      <li *ngFor="let expense of expenses">
-        {{ expense.name }} - ${{ expense.amount }} ({{ expense.category }})
-      </li>
-    </ul>
-  </section>
-  
+  <h3>Add Transaction</h3>
+  <form (submit)="addTransaction()">
+    <input type="date" [(ngModel)]="newTransaction.Date" name="date" required />
+
+    <input type="text" placeholder="Description" [(ngModel)]="newTransaction.Description" name="description" required />
+
+    <select [(ngModel)]="newTransaction.Category" name="category" required>
+      <option *ngFor="let category of getCategoryKeys()" [value]="category">{{ category }}</option>
+    </select>
+    
+
+    <input type="number" placeholder="Amount" [(ngModel)]="newTransaction.Amount" name="amount" required />
+
+    <select [(ngModel)]="newTransaction.Type" name="type" required>
+      <option value="DR">Debit</option>
+      <option value="CR">Credit</option>
+    </select>
+
+    <button type="submit">Add</button>
+  </form>
+
+  <!-- 🟢 Upload PDF -->
+  <input type="file" (change)="onFileSelected($event)" accept=".pdf">
+  <button (click)="uploadPDF()">Upload PDF</button>
+
+
+  <h2>Transaction List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Type</th>
+        <th>Balance</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of transactions">
+        <td>{{ transaction.Date }}</td>
+        <td>{{ transaction.Description }}</td>
+        <td>{{ transaction.Category }}</td>
+        <td>{{ transaction.Amount | currency }}</td>
+        <td>{{ transaction.Type }}</td>
+        <td>{{ transaction.Balance | currency }}</td>
+        <td>
+          <button (click)="deleteTransaction(transaction._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

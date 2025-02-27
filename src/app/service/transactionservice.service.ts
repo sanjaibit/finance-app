@@ -10,6 +10,7 @@ export interface Transaction {
   Category: string;
   Amount: number;
   Type: 'DR' | 'CR';
+  Balance: number;
 }
 
 @Injectable({
@@ -18,7 +19,7 @@ export interface Transaction {
 export class ApiService {
   private apiUrl = 'http://127.0.0.1:5000';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Fetch transactions
   getTransactions(): Observable<Transaction[]> {
@@ -26,11 +27,32 @@ export class ApiService {
       catchError(this.handleError)
     );
   }
+  uploadPDF(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post(`${this.apiUrl}/upload_pdf`, formData).pipe(
+      catchError(this.handleError)
+    );
+  }
+  // 🟢 Analyze Spending Patterns
+  analyzeSpending(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/analyze_spending`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // 🟢 Generate Financial Suggestions
+  getSuggestions(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/generate_suggestions`).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   // Add a new transaction (POST)
   addTransaction(transaction: Omit<Transaction, '_id'>): Observable<Transaction> {
     return this.http
-      .post<Transaction>(`${this.apiUrl}/add_transaction`, transaction, {
+      .post<Transaction>(`${this.apiUrl}/manual_entry`, transaction, {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       })
       .pipe(catchError(this.handleError));
