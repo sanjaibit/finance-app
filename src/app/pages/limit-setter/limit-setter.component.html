@@ -1,0 +1,25 @@
+<div class="dashboard-container">
+    <h2>Monthly Expense Tracker</h2>
+  
+    <!-- Expense Limit Section -->
+    <div class="expense-limit-section">
+      <h3>Set Monthly Limit</h3>
+      <input type="number" [(ngModel)]="expenseLimit" placeholder="Enter limit amount">
+      <button (click)="setExpenseLimit(expenseLimit)">Set Limit</button>
+    </div>
+  
+    <!-- Expense Overview -->
+    <div class="expense-overview">
+      <h3>Current Month's Expense</h3>
+      <p><strong>Limit:</strong> ${{ expenseLimit || 'Not set' }}</p>
+      <p><strong>Spent:</strong> ${{ currentExpense }}</p>
+      <p><strong>Remaining:</strong> ${{ expenseLimit - currentExpense }}</p>
+  
+      <!-- Warning if expenses exceed limit -->
+      <div *ngIf="currentExpense > expenseLimit" class="warning">
+        ⚠️ Warning: You have exceeded your monthly limit!
+      </div>
+    </div>
+  
+  </div>
+  
