@@ -17,7 +17,7 @@ export interface Transaction {
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://127.0.0.1:5000';
+  private apiUrl = 'https://finance-service-api.onrender.com';
 
   constructor(private http: HttpClient) { }
 

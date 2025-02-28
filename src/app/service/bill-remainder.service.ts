@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BillReminderService {
-  private apiUrl = 'http://127.0.0.1:5000'; 
+  private apiUrl = 'https://finance-service-api.onrender.com'; 
 
   private http = inject(HttpClient);
 

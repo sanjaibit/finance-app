@@ -12,7 +12,7 @@ interface ExpenseLimit {
   providedIn: 'root'
 })
 export class ExpenseLimitService {
-  private apiUrl = 'http://127.0.0.1:5000';
+  private apiUrl = 'https://finance-service-api.onrender.com';
 
   constructor(private http: HttpClient) {}
 
