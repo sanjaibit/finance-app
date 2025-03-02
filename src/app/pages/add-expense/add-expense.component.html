@@ -1,31 +1,57 @@
 <div class="container">
-  
+
   <h3>Add Transaction</h3>
   <form (submit)="addTransaction()">
-    <input type="date" [(ngModel)]="newTransaction.Date" name="date" required />
+    <!-- First Row -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" id="date" [(ngModel)]="newTransaction.Date" name="date" required />
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input type="text" id="description" placeholder="Description" [(ngModel)]="newTransaction.Description"
+          name="description" required />
+      </div>
+    </div>
 
-    <input type="text" placeholder="Description" [(ngModel)]="newTransaction.Description" name="description" required />
+    <!-- Second Row -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="category">Category:</label>
+        <select id="category" [(ngModel)]="newTransaction.Category" name="category" required>
+          <option *ngFor="let category of getCategoryKeys()" [value]="category">{{ category }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" placeholder="Amount" [(ngModel)]="newTransaction.Amount" name="amount"
+          required />
+      </div>
+    </div>
 
-    <select [(ngModel)]="newTransaction.Category" name="category" required>
-      <option *ngFor="let category of getCategoryKeys()" [value]="category">{{ category }}</option>
-    </select>
-    
+    <!-- Third Row (Single Option) -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="type">Type:</label>
+        <select id="type" [(ngModel)]="newTransaction.Type" name="type" required>
+          <option value="DR">Debit</option>
+          <option value="CR">Credit</option>
+        </select>
+      </div>
+    </div>
 
-    <input type="number" placeholder="Amount" [(ngModel)]="newTransaction.Amount" name="amount" required />
-
-    <select [(ngModel)]="newTransaction.Type" name="type" required>
-      <option value="DR">Debit</option>
-      <option value="CR">Credit</option>
-    </select>
-
-    <button type="submit">Add</button>
+    <!-- Submit Button -->
+    <button type="submit" class="addbtn">Add</button>
   </form>
 
-  <!-- 🟢 Upload PDF -->
-  <input type="file" (change)="onFileSelected($event)" accept=".pdf">
-  <button (click)="uploadPDF()">Upload PDF</button>
-
-
+  <div class="file-upload-container">
+    <label for="pdf-upload">Upload PDF:</label>
+    <input type="file" id="pdf-upload" (change)="onFileSelected($event)" accept=".pdf">
+    <button (click)="uploadPDF()">Upload PDF</button>
+  </div>
+</div>
+<div class="transactions">
   <h2>Transaction List</h2>
   <table>
     <thead>
@@ -44,14 +70,13 @@
         <td>{{ transaction.Date }}</td>
         <td>{{ transaction.Description }}</td>
         <td>{{ transaction.Category }}</td>
-        <td>{{ transaction.Amount | currency }}</td>
+        <td>{{ transaction.Amount }}</td>
         <td>{{ transaction.Type }}</td>
-        <td>{{ transaction.Balance | currency }}</td>
+        <td>{{ transaction.Balance }}</td>
         <td>
           <button (click)="deleteTransaction(transaction._id)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
-
 </div>

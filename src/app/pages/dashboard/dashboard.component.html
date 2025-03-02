@@ -17,7 +17,7 @@
     <h3>{{ card.amount | number:'1.2-2' }}</h3>
     <p>
       <span class="stat-change {{ card.color }}">
-        {{ card.color === 'up' ? '+12.5%' : card.color === 'down' ? '-3.2%' : '+0%' }}
+        {{ card.percentageChange }}
       </span>
       vs previous month
     </p>
@@ -30,8 +30,6 @@
     <div class="chart-header">
       <h5>Expense Overview</h5>
       <div class="chart-tabs">
-        <button class="chart-tab" [class.active]="activeExpensePeriod === 'week'"
-          (click)="setExpensePeriod('week')">Week</button>
         <button class="chart-tab" [class.active]="activeExpensePeriod === 'month'"
           (click)="setExpensePeriod('month')">Month</button>
         <button class="chart-tab" [class.active]="activeExpensePeriod === 'year'"
@@ -46,8 +44,6 @@
     <div class="chart-header">
       <h5>Category Wise Expenses</h5>
       <div class="chart-tabs">
-        <button class="chart-tab" [class.active]="activeCategoryPeriod === 'week'"
-          (click)="setCategoryPeriod('week')">Week</button>
         <button class="chart-tab" [class.active]="activeCategoryPeriod === 'month'"
           (click)="setCategoryPeriod('month')">Month</button>
         <button class="chart-tab" [class.active]="activeCategoryPeriod === 'year'"
@@ -65,9 +61,12 @@
   <!-- Savings Goal Section -->
   <section class="savings-goal">
     <h2>Savings Goal</h2>
-    <p>Goal: ${{ savingsGoal | number:'1.2-2' }} | Current: ${{ currentSavings | number:'1.2-2' }}</p>
+    <p>Goal: ${{ expenselimit.limit| number:'1.2-2' }} | Current: ${{ expenselimit.current_expense| number:'1.2-2' }}</p>
     <div class="progress-bar">
       <div class="progress" [style.width.%]="savingsPercentage"></div>
+    </div>
+    <div *ngFor="let item of suggestions | keyvalue">
+      {{ item.key }}: {{ item.value }}
     </div>
   </section>
 
@@ -85,7 +84,7 @@
             <p>Due: {{ bill.date }}</p>
           </div>
         </div>
-        <div class="bill-amount">${{ bill.amount | number:'1.2-2' }}</div>
+        <div class="bill-amount">{{ bill.amount | number:'1.2-2' }}</div>
       </li>
     </ul>
   </section>
@@ -93,7 +92,7 @@
 
 <!-- Transactions Table -->
 <div class="transactions">
-  <h5>Recent Transactions</h5>
+  <h5>Largest Transactions</h5>
   <table>
     <thead>
       <tr>
@@ -104,7 +103,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let transaction of transactions">
+      <tr *ngFor="let transaction of analysis?.largest_transactions">
         <td>{{ transaction.Date }}</td>
         <td>{{ transaction.Description }}</td>
         <td>{{ transaction.Category }}</td>

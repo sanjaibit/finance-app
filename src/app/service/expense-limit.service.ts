@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-interface ExpenseLimit {
+export interface ExpenseLimit {
   month: string;
   limit: number;
   current_expense: number;
