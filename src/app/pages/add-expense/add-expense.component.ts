@@ -75,7 +75,7 @@ export class AddExpenseComponent implements OnInit {
     const transactionToAdd = {
       Date: new Date(this.newTransaction.Date ?? new Date()).toISOString().split('T')[0], // ✅ Fix applied
       Description: this.newTransaction.Description ?? '',
-      Category: this.getCategoryFromDescription(this.newTransaction.Description || ''),
+      Category: this.newTransaction.Category,
       Amount: Number(this.newTransaction.Amount) || 0, // Ensure number type
       Type: this.newTransaction.Type ?? 'DR',
       Balance: newBalance,
@@ -113,7 +113,7 @@ export class AddExpenseComponent implements OnInit {
         return category;
       }
     }
-    return 'OTHER'; // Default category if no match found
+    return 'OTHERS'; // Default category if no match found
   }
   getCategoryKeys(): string[] {
     return Object.keys(this.categories);
